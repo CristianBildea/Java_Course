@@ -1,5 +1,11 @@
 package ca.javacourse.Assignment_1_Cristian_Bildea;
 
+/**
+ * Date: 2012-10-18
+ * Author: Cristian Bildea
+ * The following program  create  a multiplication table based on the input of the user.
+ */
+
 import java.util.Scanner;
 
 public class MultiplicationTable {
@@ -13,31 +19,37 @@ public class MultiplicationTable {
 
         int a;
         int b;
+
+        //Add the title of the table
+
         int middle = Math.round(size / 2);
-        for (a = 1; a<= middle; ++a ) { // add the title of table in middle
+        for (a = 1; a<= middle; ++a ) {
             System.out.print("\t\t");
         }
 
             System.out.print("Multiplication Table");
 
-
-
         System.out.println();
 
+        // Row Header
 
-
-        System.out.print(String.format("\t")); //row header
+        System.out.print(String.format("\t"));
             for (a = 1; a <= size; ++a) {
                 System.out.print(String.format("\t%4d", a));
             }
         System.out.println();
 
-        for (a = 1; a <= size; ++a) { // column header
+            // Column Header
+
+
+        for (a = 1; a <= size; ++a) {
             System.out.print(String.format("---------"));
         }
         System.out.println();
 
-            for (a = 1; a <= size; ++a) { // the body of table with results
+        // Body of the table with results
+
+            for (a = 1; a <= size; ++a) {
 
                 System.out.print(String.format("%4d|", a));
 

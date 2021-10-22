@@ -1,5 +1,24 @@
 package ca.javacourse.Assignment_1_Cristian_Bildea;
 
+
+/**
+ * Date: 2012-10-18
+ * Author: Cristian Bildea
+ * The following program the calculates the price per person for a meal
+ * The program should ask the user several questions including: the number of diners, The price of the meal, before tax and
+ * the tip percentage (Horrible = 0% -D, Basic service = 10% - C, Good service = 15% - B, Exceptional Service = 20% - A)
+ * The program will then display the following information:
+ * • The number of diners
+ * • The price of the meal before tax
+ * • The Quebec tax added (Federal)
+ * • The Quebec tax added (Provincial)
+ * • The total including tax
+ * • The tip amount (based on the price before tax)
+ * • The grand total including tax
+ * • The amount owed per person
+ */
+
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Scanner;
 
@@ -9,15 +28,14 @@ public class TipCalculator {
 
         final double GST = 0.05;
         final double QST = 0.09975;
-        final float H = 0.0f;
-        final float BS = .1f;
-        final float GS = .15f;
-        final float ES = .2f;
+        final float D = 0.0f;
+        final float C = .1f;
+        final float B = .15f;
+        final float A = .2f;
 
         Scanner sc = new Scanner(System.in);
         int mealsQuantity;
         double priceOfMealBeforeTax;
-        double subTotalBeforeTax;
         double valueGST;
         double valueQST;
         double totalWithTax;
@@ -26,6 +44,8 @@ public class TipCalculator {
         double grandTotal;
         double amountPerPerson;
         String formattedPrice;
+
+        // Display number of diners
 
         System.out.println("How many meals were ordered?");
         String reading = "";
@@ -37,6 +57,7 @@ public class TipCalculator {
 
         mealsQuantity = Integer.parseInt(reading);
 
+        // Display price of the meal before tax
 
         System.out.println("What is the price of the meal?");
         reading = sc.nextLine();
@@ -45,41 +66,48 @@ public class TipCalculator {
             reading = sc.nextLine();
         }
         priceOfMealBeforeTax = Double.parseDouble(reading);
+        formattedPrice =NumberFormat.getCurrencyInstance().format(priceOfMealBeforeTax);
 
         System.out.println(String.format("The number of meal ordered are " + mealsQuantity ));
-        System.out.println(String.format("The price of the meal is " + priceOfMealBeforeTax));
+        System.out.println(String.format("The price of the meal is " + formattedPrice));
 
-        subTotalBeforeTax = mealsQuantity * priceOfMealBeforeTax;
-        System.out.println("Price of the meal before tax is: " + subTotalBeforeTax );
 
-        valueGST = subTotalBeforeTax * GST;
+        // Display value of Federal tax (GST)
+
+        valueGST = priceOfMealBeforeTax * GST;
         System.out.println("GST: " + valueGST);
 
-        valueQST = subTotalBeforeTax * QST;
+        // Display value of Provincial Tax (QST)
+
+        valueQST = priceOfMealBeforeTax * QST;
         System.out.println("QST: " + valueQST);
 
-        totalWithTax = subTotalBeforeTax + valueGST + valueQST;
-        System.out.println("Total price with tax is: " + totalWithTax);
+        // Display the total including tax
+
+        totalWithTax = priceOfMealBeforeTax + valueGST + valueQST;
+        formattedPrice = NumberFormat.getCurrencyInstance().format(totalWithTax);
+        System.out.println("Total price with tax is: " + formattedPrice);
+
+        //Display  tip amount based on the price before tax and based by customer choices (A=20%, B=15%, C=10%, D=0%
 
         do {  // will loop until the customer put a valid option
 
-        // System.out.println("Please enter a tip percentage: 0% , 10%, 15% or 20%");
         System.out.println("Please enter a tip percentage: A=20, B=15, C=10, D=0:");
         char answer = sc.next().charAt(0);
 
         switch (answer)
         {
             case 'A':
-                tipPercentage = ES;
+                tipPercentage = A;
                  break;
             case 'B':
-                tipPercentage = GS;
+                tipPercentage = B;
                 break;
             case 'C':
-                tipPercentage = BS;
+                tipPercentage = C;
                 break;
             case 'D':
-                tipPercentage = H;
+                tipPercentage = D;
             default:
                 System.out.println("This option is not valid, pls choose one of the valid percentage");
                 tipPercentage = 1f;
@@ -87,27 +115,27 @@ public class TipCalculator {
 
         }
         }while (tipPercentage == 1f);
-        valueOfTip = tipPercentage * subTotalBeforeTax;
-        System.out.println("The tip amount is: " + valueOfTip);
+        valueOfTip = tipPercentage * priceOfMealBeforeTax;
+        formattedPrice = NumberFormat.getCurrencyInstance().format(valueOfTip);
+        System.out.println("The tip amount is: " + formattedPrice);
+
+        // Display grand total value including tax and tip
 
         grandTotal = totalWithTax + valueOfTip;
-        System.out.println("The grand total is: " + grandTotal);
+        formattedPrice = NumberFormat.getCurrencyInstance().format(grandTotal);
+        System.out.println("The grand total is: " + formattedPrice);
+
+        // Display amount owed per person
 
         amountPerPerson = grandTotal / mealsQuantity;
-        System.out.println("Value of the amount owed per person is: " + amountPerPerson);
+        formattedPrice = NumberFormat.getCurrencyInstance().format(amountPerPerson);
+        System.out.println("Value of the amount owed per person is: " + formattedPrice);
 
-       // formattedPrice = NumberFormat.getCurrencyInstance();
-
-       /* boolean A = (answer % 10) == 0;
-        boolean B = (answer % 15) == 0;
-        if (A) {
-            valueOfTip = subTotalBeforeTax * BS;
-            System.out.println("The tip amount is: " + valueOfTip);
+        NumberFormat f = NumberFormat.getInstance();
+        if (f instanceof DecimalFormat) {
+            ((DecimalFormat) f).setDecimalSeparatorAlwaysShown(true);
         }
-        if (B) {
-            valueOfTip = subTotalBeforeTax * GS;
-            System.out.println("The tip amount is: " + valueOfTip);
-        }*/
+
 
 
     }
