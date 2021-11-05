@@ -9,6 +9,12 @@ public class Student {
 
     static int lastId = 0; //because is italic is show is static
 
+    @Override
+    public String toString()
+    {
+        return "This is a student" + firstName + lastName;
+    }
+
     //Constructor
 
     public Student(String firstName, String lastName, String permCode) {
